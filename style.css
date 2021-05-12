@@ -16,6 +16,17 @@ body, html {
     line-height: 1.5;
 }
 
+button {
+    border: none;
+    background-color: transparent;
+    color: var(--light-color);
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.9);
+}
+
 .wrapper {
     min-height: 100vh;
     color: var(--light-color);
@@ -46,23 +57,13 @@ body, html {
 
 .control > div {
     display: flex;
-    justify-content: space-around;
-}
-
-.control button {
-    border: none;
-    background-color: transparent;
-    color: var(--light-color);
-    cursor: pointer;
-}
-
-.control button:active {
-    transform: scale(0.9);
+    justify-content: center;
 }
 
 .control span {
     font-size: 3rem;
     font-weight: bold;
+    padding: 0 2rem;
 }
 
 .timer {
@@ -80,4 +81,8 @@ body, html {
 
 .timer p {
     font-size: 5rem;
+}
+
+.main-controls button:first-of-type {
+    padding-right: 2rem;
 }
