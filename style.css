@@ -17,11 +17,11 @@ body, html {
 }
 
 .wrapper {
-    height: 100vh;
+    min-height: 100vh;
     color: var(--light-color);
     background-color: var(--bg-color);
     text-align: center;
-    padding-top: 10rem;
+    padding-top: 5rem;
 }
 
 .container {
@@ -63,4 +63,21 @@ body, html {
 .control span {
     font-size: 3rem;
     font-weight: bold;
+}
+
+.timer {
+    width: 27rem;
+    height: 16rem;
+    margin: 2rem auto;
+    border: .7rem solid var(--border-color);
+    border-radius: 5rem;
+    padding: 2rem;
+}
+
+.timer h3 {
+    font-size: 3rem;
+}
+
+.timer p {
+    font-size: 5rem;
 }
