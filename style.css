@@ -11,7 +11,7 @@
 }
   
 body, html {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 10px;
     line-height: 1.5;
 }
@@ -27,5 +27,40 @@ body, html {
 .container {
     width: 50rem;
     margin: 0 auto;
-    background-color: aliceblue;
+}
+
+.header {
+    font-size: 5rem;
+    margin-bottom: 2rem;
+}
+
+.controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.control h2 {
+    font-size: 3rem;
+}
+
+.control > div {
+    display: flex;
+    justify-content: space-around;
+}
+
+.control button {
+    border: none;
+    background-color: transparent;
+    color: var(--light-color);
+    cursor: pointer;
+}
+
+.control button:active {
+    transform: scale(0.9);
+}
+
+.control span {
+    font-size: 3rem;
+    font-weight: bold;
 }
