@@ -1,4 +1,8 @@
-
+:root {
+    --bg-color: #1e555c;
+    --light-color: #ffffff;
+    --border-color: #13353a;
+}
   
 * {
     margin: 0;
