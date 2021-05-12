@@ -15,3 +15,17 @@ body, html {
     font-size: 10px;
     line-height: 1.5;
 }
+
+.wrapper {
+    height: 100vh;
+    color: var(--light-color);
+    background-color: var(--bg-color);
+    text-align: center;
+    padding-top: 10rem;
+}
+
+.container {
+    width: 50rem;
+    margin: 0 auto;
+    background-color: aliceblue;
+}
