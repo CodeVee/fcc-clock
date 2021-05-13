@@ -1,8 +1,8 @@
-const sessionMins = 25;
-const breakMins = 5;
+const initialSessionMins = 25;
+const initialBreakMins = 5;
 
-let initialSessionMins = sessionMins;
-let initialBreakMins = breakMins;
+let sessionMins = initialSessionMins;
+let breakMins = initialBreakMins;
 
 const  max = 60; 
 const min = 1;
@@ -36,11 +36,13 @@ document.getElementById('start_stop').addEventListener('click', () => {
 })
 
 document.getElementById('break-decrement').addEventListener('click', () => {
-    
+    breakMins = decrementValue(breakMins);
+    breakLength.innerHTML = breakMins;
 })
 
 document.getElementById('break-increment').addEventListener('click', () => {
-    
+    breakMins = incrementValue(breakMins);
+    breakLength.innerHTML = breakMins;
 })
 
 document.getElementById('session-decrement').addEventListener('click', () => {
