@@ -6,6 +6,8 @@ let breakMins = initialBreakMins;
 
 let countdownSecs = sessionMins * 60; 
 let running = false;
+let intervalId = 0;
+let inSession = true;
 
 const  max = 60; 
 const min = 1;
@@ -31,17 +33,56 @@ const incrementValue = number => {
     return number;
 }
 
+const formatNumber = num => num < 10 ? '0' + num : num.toString();
+
+const startTimer = () => {
+    running = true;
+
+    intervalId = setInterval(() => {
+        countdownSecs -= 1
+        if (countdownSecs === 0) {
+            countdownSecs = inSession ? breakMins * 60 : sessionMins * 60;
+            inSession = !inSession;
+        }
+
+        const min = Math.floor(countdownSecs / 60);
+        const sec = countdownSecs % 60;
+
+        const minStr = formatNumber(min);
+        const secStr = formatNumber(sec);
+
+        const text = inSession ? 'Session' : 'Break';
+        timerLabel.innerHTML = text;
+
+        timeLeft.innerHTML = `${minStr}:${secStr}`;
+
+    }, 1000);
+}
+
+const stopTimer = () => clearInterval(intervalId);
+
 document.getElementById('reset').addEventListener('click', () => {
     running = false;
+    stopTimer();
+
     sessionMins = initialSessionMins;
+    sessionLength.innerHTML = sessionMins;
+
     breakMins = initialBreakMins;
+    breakLength.innerHTML = breakMins;
+
     countdownSecs = sessionMins * 60;
     timeLeft.innerHTML = '25:00';
     timerLabel.innerHTML = 'Session';
 })
 
 document.getElementById('start_stop').addEventListener('click', () => {
-    
+    if (running) {
+        running = false;
+        stopTimer();
+        return;
+    }
+    startTimer();
 })
 
 document.getElementById('break-decrement').addEventListener('click', () => {
@@ -65,7 +106,9 @@ document.getElementById('session-decrement').addEventListener('click', () => {
         return;
     }
     sessionMins = decrementValue(sessionMins);
+    countdownSecs = sessionMins * 60;
     sessionLength.innerHTML = sessionMins;
+    timeLeft.innerHTML = `${formatNumber(sessionMins)}:00`
 })
 
 document.getElementById('session-increment').addEventListener('click', () => {
@@ -73,5 +116,7 @@ document.getElementById('session-increment').addEventListener('click', () => {
         return;
     }
     sessionMins = incrementValue(sessionMins);
+    countdownSecs = sessionMins * 60;
     sessionLength.innerHTML = sessionMins;
+    timeLeft.innerHTML = `${formatNumber(sessionMins)}:00`
 })
