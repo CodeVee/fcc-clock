@@ -46,9 +46,11 @@ document.getElementById('break-increment').addEventListener('click', () => {
 })
 
 document.getElementById('session-decrement').addEventListener('click', () => {
-    
+    sessionMins = decrementValue(sessionMins);
+    sessionLength.innerHTML = sessionMins;
 })
 
 document.getElementById('session-increment').addEventListener('click', () => {
-    
+    sessionMins = incrementValue(sessionMins);
+    sessionLength.innerHTML = sessionMins;
 })
