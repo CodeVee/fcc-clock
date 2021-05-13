@@ -90,3 +90,38 @@ button:active {
 .main-controls button:first-of-type {
     padding-right: 2rem;
 }
+
+@media screen and (max-width: 500px){
+
+    .container {
+        width: 90%;
+    }
+    
+    .header {
+        font-size: 3rem;
+        margin-bottom: 3rem;
+    }
+    
+    .controls {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .control h2, .control span {
+        font-size: 2.5rem;
+    }
+    
+    #timer {
+        width: 80%;
+        border: .5rem solid var(--border-color);
+        margin: 3rem auto;
+    }
+    
+    #timer h3 {
+        font-size: 2.5rem;
+    }
+    
+    #timer p {
+        font-size: 5rem;
+    }
+}
