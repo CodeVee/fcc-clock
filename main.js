@@ -17,6 +17,7 @@ const sessionLength = document.getElementById('session-length');
 const timeLeft = document.getElementById('time-left');
 const timerLabel = document.getElementById('timer-label');
 const timer = document.getElementById('timer');
+const beep = document.getElementById('beep');
 
 const decrementValue = number => {
     number -= 1;
@@ -41,11 +42,6 @@ const startTimer = () => {
 
     intervalId = setInterval(() => {
         countdownSecs -= 1
-        if (countdownSecs === 0) {
-            countdownSecs = inSession ? breakMins * 60 : sessionMins * 60;
-            inSession = !inSession;
-        }
-
         const present = timer.classList.contains('red');
         if (countdownSecs < 60) {
             if (!present) {
@@ -57,6 +53,8 @@ const startTimer = () => {
             }
         }
 
+        
+
         const min = Math.floor(countdownSecs / 60);
         const sec = countdownSecs % 60;
 
@@ -66,8 +64,13 @@ const startTimer = () => {
         const text = inSession ? 'Session' : 'Break';
         timerLabel.innerHTML = text;
 
-        timeLeft.innerHTML = `${minStr}:${secStr}`;
+        if (countdownSecs === 0) {
+            beep.play();
+            countdownSecs = inSession ? breakMins * 60 + 1 : sessionMins * 60 + 1;
+            inSession = !inSession;
+        }
 
+        timeLeft.innerHTML = `${minStr}:${secStr}`;
     }, 1000);
 }
 
@@ -75,7 +78,10 @@ const stopTimer = () => clearInterval(intervalId);
 
 document.getElementById('reset').addEventListener('click', () => {
     running = false;
+    inSession = true;
     stopTimer();
+    beep.pause();
+    beep.currentTime  = 0;
     timer.classList.remove('red');
 
     sessionMins = initialSessionMins;
@@ -102,16 +108,26 @@ document.getElementById('break-decrement').addEventListener('click', () => {
     if (running) {
         return;
     }
+
     breakMins = decrementValue(breakMins);
     breakLength.innerHTML = breakMins;
+    if (!inSession) {
+        countdownSecs = breakMins * 60;
+        timeLeft.innerHTML = `${formatNumber(breakMins)}:00`
+    }
 })
 
 document.getElementById('break-increment').addEventListener('click', () => {
     if (running) {
         return;
     }
+
     breakMins = incrementValue(breakMins);
     breakLength.innerHTML = breakMins;
+    if (!inSession) {
+        countdownSecs = breakMins * 60;
+        timeLeft.innerHTML = `${formatNumber(breakMins)}:00`
+    }
 })
 
 document.getElementById('session-decrement').addEventListener('click', () => {
@@ -119,9 +135,11 @@ document.getElementById('session-decrement').addEventListener('click', () => {
         return;
     }
     sessionMins = decrementValue(sessionMins);
-    countdownSecs = sessionMins * 60;
     sessionLength.innerHTML = sessionMins;
-    timeLeft.innerHTML = `${formatNumber(sessionMins)}:00`
+    if (inSession) {
+        countdownSecs = sessionMins * 60;
+        timeLeft.innerHTML = `${formatNumber(sessionMins)}:00`
+    }
 })
 
 document.getElementById('session-increment').addEventListener('click', () => {
@@ -129,7 +147,9 @@ document.getElementById('session-increment').addEventListener('click', () => {
         return;
     }
     sessionMins = incrementValue(sessionMins);
-    countdownSecs = sessionMins * 60;
     sessionLength.innerHTML = sessionMins;
-    timeLeft.innerHTML = `${formatNumber(sessionMins)}:00`
+    if (inSession) {
+        countdownSecs = sessionMins * 60;
+        timeLeft.innerHTML = `${formatNumber(sessionMins)}:00`
+    }
 })
