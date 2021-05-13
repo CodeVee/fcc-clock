@@ -16,6 +16,7 @@ const breakLength = document.getElementById('break-length');
 const sessionLength = document.getElementById('session-length');
 const timeLeft = document.getElementById('time-left');
 const timerLabel = document.getElementById('timer-label');
+const timer = document.getElementById('timer');
 
 const decrementValue = number => {
     number -= 1;
@@ -45,6 +46,17 @@ const startTimer = () => {
             inSession = !inSession;
         }
 
+        const present = timer.classList.contains('red');
+        if (countdownSecs < 60) {
+            if (!present) {
+                timer.classList.toggle('red');
+            } 
+        } else {
+            if (present) {
+                timer.classList.toggle('red');
+            }
+        }
+
         const min = Math.floor(countdownSecs / 60);
         const sec = countdownSecs % 60;
 
@@ -64,6 +76,7 @@ const stopTimer = () => clearInterval(intervalId);
 document.getElementById('reset').addEventListener('click', () => {
     running = false;
     stopTimer();
+    timer.classList.remove('red');
 
     sessionMins = initialSessionMins;
     sessionLength.innerHTML = sessionMins;
