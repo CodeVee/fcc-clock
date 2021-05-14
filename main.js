@@ -102,14 +102,9 @@ document.getElementById('reset').addEventListener('click', () => {
     timer.classList.remove('red');
 
     sessionMins = initialSessionMins;
-    sessionLength.innerHTML = sessionMins;
-
     breakMins = initialBreakMins;
-    breakLength.innerHTML = breakMins;
 
-    countdownSecs = sessionMins * 60;
-    timeLeft.innerHTML = '25:00';
-    timerLabel.innerHTML = 'Session';
+    adjustDisplay();
 })
 
 document.getElementById('start_stop').addEventListener('click', () => {
@@ -122,51 +117,29 @@ document.getElementById('start_stop').addEventListener('click', () => {
 })
 
 document.getElementById('break-decrement').addEventListener('click', () => {
-    if (running) {
-        return;
-    }
+    if (running) return;
 
     breakMins = decrementValue(breakMins);
-    breakLength.innerHTML = breakMins;
-    if (!inSession) {
-        countdownSecs = breakMins * 60;
-        timeLeft.innerHTML = `${formatNumber(breakMins)}:00`
-    }
+    adjustDisplay();
 })
 
 document.getElementById('break-increment').addEventListener('click', () => {
-    if (running) {
-        return;
-    }
+    if (running) return;
 
     breakMins = incrementValue(breakMins);
-    breakLength.innerHTML = breakMins;
-    if (!inSession) {
-        countdownSecs = breakMins * 60;
-        timeLeft.innerHTML = `${formatNumber(breakMins)}:00`
-    }
+    adjustDisplay();
 })
 
 document.getElementById('session-decrement').addEventListener('click', () => {
-    if (running) {
-        return;
-    }
+    if (running) return;
+
     sessionMins = decrementValue(sessionMins);
-    sessionLength.innerHTML = sessionMins;
-    if (inSession) {
-        countdownSecs = sessionMins * 60;
-        timeLeft.innerHTML = `${formatNumber(sessionMins)}:00`
-    }
+    adjustDisplay()
 })
 
 document.getElementById('session-increment').addEventListener('click', () => {
-    if (running) {
-        return;
-    }
+    if (running) return;
+
     sessionMins = incrementValue(sessionMins);
-    sessionLength.innerHTML = sessionMins;
-    if (inSession) {
-        countdownSecs = sessionMins * 60;
-        timeLeft.innerHTML = `${formatNumber(sessionMins)}:00`
-    }
+    adjustDisplay();
 })
