@@ -3,14 +3,6 @@ const min = 1;
 const initialSessionMins = 25;
 const initialBreakMins = 5;
 
-let sessionMins = initialSessionMins;
-let breakMins = initialBreakMins;
-
-let countdownSecs = calculateCountdown(sessionMins); 
-let running = false;
-let intervalId = 0;
-let inSession = true;
-
 const breakLength = document.getElementById('break-length');
 const sessionLength = document.getElementById('session-length');
 const timeLeft = document.getElementById('time-left');
@@ -86,6 +78,14 @@ const startTimer = () => {
 }
 
 const stopTimer = () => clearInterval(intervalId);
+
+let sessionMins = initialSessionMins;
+let breakMins = initialBreakMins;
+
+let countdownSecs = calculateCountdown(sessionMins); 
+let running = false;
+let intervalId = 0;
+let inSession = true;
 
 document.getElementById('reset').addEventListener('click', () => {
     running = false;
