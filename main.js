@@ -35,6 +35,23 @@ const incrementValue = number => {
     return number;
 }
 
+const adjustDisplay = () => {
+    sessionLength.innerHTML = sessionMins;
+    breakLength.innerHTML = breakMins;
+
+    if (inSession) {
+        countdownSecs = sessionMins * 60;
+        timeLeft.innerHTML = `${sessionMins}:00`;
+        timerLabel.innerHTML = 'Session';
+    }
+
+    if (!inSession) {
+        countdownSecs = breakMins * 60;
+        timeLeft.innerHTML = `${breakMins}:00`;
+        timerLabel.innerHTML = 'Break';
+    }
+}
+
 const formatNumber = num => num < 10 ? '0' + num : num.toString();
 
 const startTimer = () => {
