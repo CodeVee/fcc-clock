@@ -6,7 +6,7 @@ const initialBreakMins = 5;
 let sessionMins = initialSessionMins;
 let breakMins = initialBreakMins;
 
-let countdownSecs = sessionMins * max; 
+let countdownSecs = calculateCountdown(sessionMins); 
 let running = false;
 let intervalId = 0;
 let inSession = true;
@@ -20,32 +20,30 @@ const beep = document.getElementById('beep');
 
 const decrementValue = number => {
     number -= min;
-    if (number < min) {
-        return min;
-    }
+    if (number < min) return min;
     return number;
 }
 
 const incrementValue = number => {
     number += min;
-    if (number > max) {
-        return max;
-    }
+    if (number > max) return max;
     return number;
 }
+
+const calculateCountdown = number => number * max; 
 
 const adjustDisplay = () => {
     sessionLength.innerHTML = sessionMins;
     breakLength.innerHTML = breakMins;
 
     if (inSession) {
-        countdownSecs = sessionMins * max;
+        countdownSecs = calculateCountdown(sessionMins);
         timeLeft.innerHTML = `${formatNumber(sessionMins)}:00`;
         timerLabel.innerHTML = 'Session';
     }
 
     if (!inSession) {
-        countdownSecs = breakMins * max;
+        countdownSecs = calculateCountdown(breakMins);
         timeLeft.innerHTML = `${formatNumber(breakMins)}:00`;
         timerLabel.innerHTML = 'Break';
     }
@@ -67,26 +65,23 @@ const startTimer = () => {
             if (present) {
                 timer.classList.toggle('red');
             }
-        }
-
-        
+        }       
 
         const minutes = Math.floor(countdownSecs / max);
         const seconds = countdownSecs % max;
 
         const minStr = formatNumber(minutes);
         const secStr = formatNumber(seconds);
+        timeLeft.innerHTML = `${minStr}:${secStr}`;
 
         const text = inSession ? 'Session' : 'Break';
         timerLabel.innerHTML = text;
 
         if (countdownSecs === 0) {
             beep.play();
-            countdownSecs = inSession ? breakMins * max + min : sessionMins * max + min;
+            countdownSecs = inSession ? calculateCountdown(breakMins) + min : calculateCountdown(sessionMins) + min;
             inSession = !inSession;
-        }
-
-        timeLeft.innerHTML = `${minStr}:${secStr}`;
+        }   
     }, 1000);
 }
 
