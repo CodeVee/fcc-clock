@@ -1,16 +1,15 @@
+const  max = 60; 
+const min = 1;
 const initialSessionMins = 25;
 const initialBreakMins = 5;
 
 let sessionMins = initialSessionMins;
 let breakMins = initialBreakMins;
 
-let countdownSecs = sessionMins * 60; 
+let countdownSecs = sessionMins * max; 
 let running = false;
 let intervalId = 0;
 let inSession = true;
-
-const  max = 60; 
-const min = 1;
 
 const breakLength = document.getElementById('break-length');
 const sessionLength = document.getElementById('session-length');
@@ -20,7 +19,7 @@ const timer = document.getElementById('timer');
 const beep = document.getElementById('beep');
 
 const decrementValue = number => {
-    number -= 1;
+    number -= min;
     if (number < min) {
         return min;
     }
@@ -28,7 +27,7 @@ const decrementValue = number => {
 }
 
 const incrementValue = number => {
-    number += 1;
+    number += min;
     if (number > max) {
         return max;
     }
@@ -40,13 +39,13 @@ const adjustDisplay = () => {
     breakLength.innerHTML = breakMins;
 
     if (inSession) {
-        countdownSecs = sessionMins * 60;
+        countdownSecs = sessionMins * max;
         timeLeft.innerHTML = `${formatNumber(sessionMins)}:00`;
         timerLabel.innerHTML = 'Session';
     }
 
     if (!inSession) {
-        countdownSecs = breakMins * 60;
+        countdownSecs = breakMins * max;
         timeLeft.innerHTML = `${formatNumber(breakMins)}:00`;
         timerLabel.innerHTML = 'Break';
     }
@@ -58,9 +57,9 @@ const startTimer = () => {
     running = true;
 
     intervalId = setInterval(() => {
-        countdownSecs -= 1
+        countdownSecs -= min
         const present = timer.classList.contains('red');
-        if (countdownSecs < 60) {
+        if (countdownSecs < max) {
             if (!present) {
                 timer.classList.toggle('red');
             } 
@@ -72,18 +71,18 @@ const startTimer = () => {
 
         
 
-        const min = Math.floor(countdownSecs / 60);
-        const sec = countdownSecs % 60;
+        const minutes = Math.floor(countdownSecs / max);
+        const seconds = countdownSecs % max;
 
-        const minStr = formatNumber(min);
-        const secStr = formatNumber(sec);
+        const minStr = formatNumber(minutes);
+        const secStr = formatNumber(seconds);
 
         const text = inSession ? 'Session' : 'Break';
         timerLabel.innerHTML = text;
 
         if (countdownSecs === 0) {
             beep.play();
-            countdownSecs = inSession ? breakMins * 60 + 1 : sessionMins * 60 + 1;
+            countdownSecs = inSession ? breakMins * max + min : sessionMins * max + min;
             inSession = !inSession;
         }
 
