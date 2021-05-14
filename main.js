@@ -41,13 +41,13 @@ const adjustDisplay = () => {
 
     if (inSession) {
         countdownSecs = sessionMins * 60;
-        timeLeft.innerHTML = `${sessionMins}:00`;
+        timeLeft.innerHTML = `${formatNumber(sessionMins)}:00`;
         timerLabel.innerHTML = 'Session';
     }
 
     if (!inSession) {
         countdownSecs = breakMins * 60;
-        timeLeft.innerHTML = `${breakMins}:00`;
+        timeLeft.innerHTML = `${formatNumber(breakMins)}:00`;
         timerLabel.innerHTML = 'Break';
     }
 }
