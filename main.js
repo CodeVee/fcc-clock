@@ -2,6 +2,10 @@ const  max = 60;
 const min = 1;
 const initialSessionMins = 25;
 const initialBreakMins = 5;
+const sessionStr = 'Session';
+const breakStr = 'Break';
+const redStr = 'red';
+const btnClick = 'click';
 
 const breakLength = document.getElementById('break-length');
 const sessionLength = document.getElementById('session-length');
@@ -31,13 +35,13 @@ const adjustDisplay = () => {
     if (inSession) {
         countdownSecs = calculateCountdown(sessionMins);
         timeLeft.innerHTML = `${formatNumber(sessionMins)}:00`;
-        timerLabel.innerHTML = 'Session';
+        timerLabel.innerHTML = sessionStr;
     }
 
     if (!inSession) {
         countdownSecs = calculateCountdown(breakMins);
         timeLeft.innerHTML = `${formatNumber(breakMins)}:00`;
-        timerLabel.innerHTML = 'Break';
+        timerLabel.innerHTML = breakStr;
     }
 }
 
@@ -48,14 +52,14 @@ const startTimer = () => {
 
     intervalId = setInterval(() => {
         countdownSecs -= min
-        const present = timer.classList.contains('red');
+        const present = timer.classList.contains(redStr);
         if (countdownSecs < max) {
             if (!present) {
-                timer.classList.toggle('red');
+                timer.classList.toggle(redStr);
             } 
         } else {
             if (present) {
-                timer.classList.toggle('red');
+                timer.classList.toggle(redStr);
             }
         }       
 
@@ -66,7 +70,7 @@ const startTimer = () => {
         const secStr = formatNumber(seconds);
         timeLeft.innerHTML = `${minStr}:${secStr}`;
 
-        const text = inSession ? 'Session' : 'Break';
+        const text = inSession ? sessionStr : breakStr;
         timerLabel.innerHTML = text;
 
         if (countdownSecs === 0) {
@@ -87,13 +91,13 @@ let running = false;
 let intervalId = 0;
 let inSession = true;
 
-document.getElementById('reset').addEventListener('click', () => {
+document.getElementById('reset').addEventListener(btnClick, () => {
     running = false;
     inSession = true;
     stopTimer();
     beep.pause();
     beep.currentTime  = 0;
-    timer.classList.remove('red');
+    timer.classList.remove(redStr);
 
     sessionMins = initialSessionMins;
     breakMins = initialBreakMins;
@@ -101,7 +105,7 @@ document.getElementById('reset').addEventListener('click', () => {
     adjustDisplay();
 })
 
-document.getElementById('start_stop').addEventListener('click', () => {
+document.getElementById('start_stop').addEventListener(btnClick, () => {
     if (running) {
         running = false;
         stopTimer();
@@ -110,28 +114,28 @@ document.getElementById('start_stop').addEventListener('click', () => {
     startTimer();
 })
 
-document.getElementById('break-decrement').addEventListener('click', () => {
+document.getElementById('break-decrement').addEventListener(btnClick, () => {
     if (running) return;
 
     breakMins = decrementValue(breakMins);
     adjustDisplay();
 })
 
-document.getElementById('break-increment').addEventListener('click', () => {
+document.getElementById('break-increment').addEventListener(btnClick, () => {
     if (running) return;
 
     breakMins = incrementValue(breakMins);
     adjustDisplay();
 })
 
-document.getElementById('session-decrement').addEventListener('click', () => {
+document.getElementById('session-decrement').addEventListener(btnClick, () => {
     if (running) return;
 
     sessionMins = decrementValue(sessionMins);
     adjustDisplay()
 })
 
-document.getElementById('session-increment').addEventListener('click', () => {
+document.getElementById('session-increment').addEventListener(btnClick, () => {
     if (running) return;
 
     sessionMins = incrementValue(sessionMins);
