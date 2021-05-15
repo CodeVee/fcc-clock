@@ -13,6 +13,12 @@ const timeLeft = document.getElementById('time-left');
 const timerLabel = document.getElementById('timer-label');
 const timer = document.getElementById('timer');
 const beep = document.getElementById('beep');
+const reset = document.getElementById('reset');
+const startStop = document.getElementById('start_stop');
+const breakDecrement = document.getElementById('break-decrement');
+const breakIncrement = document.getElementById('break-increment');
+const sessionDecrement = document.getElementById('session-decrement');
+const sessionIncrement = document.getElementById('session-increment');
 
 const decrementValue = number => {
     number -= min;
@@ -91,7 +97,7 @@ let running = false;
 let intervalId = 0;
 let inSession = true;
 
-document.getElementById('reset').addEventListener(btnClick, () => {
+reset.addEventListener(btnClick, () => {
     running = false;
     inSession = true;
     stopTimer();
@@ -105,7 +111,7 @@ document.getElementById('reset').addEventListener(btnClick, () => {
     adjustDisplay();
 })
 
-document.getElementById('start_stop').addEventListener(btnClick, () => {
+startStop.addEventListener(btnClick, () => {
     if (running) {
         running = false;
         stopTimer();
@@ -114,28 +120,28 @@ document.getElementById('start_stop').addEventListener(btnClick, () => {
     startTimer();
 })
 
-document.getElementById('break-decrement').addEventListener(btnClick, () => {
+breakDecrement.addEventListener(btnClick, () => {
     if (running) return;
 
     breakMins = decrementValue(breakMins);
     adjustDisplay();
 })
 
-document.getElementById('break-increment').addEventListener(btnClick, () => {
+breakIncrement.addEventListener(btnClick, () => {
     if (running) return;
 
     breakMins = incrementValue(breakMins);
     adjustDisplay();
 })
 
-document.getElementById('session-decrement').addEventListener(btnClick, () => {
+sessionDecrement.addEventListener(btnClick, () => {
     if (running) return;
 
     sessionMins = decrementValue(sessionMins);
     adjustDisplay()
 })
 
-document.getElementById('session-increment').addEventListener(btnClick, () => {
+sessionIncrement.addEventListener(btnClick, () => {
     if (running) return;
 
     sessionMins = incrementValue(sessionMins);
